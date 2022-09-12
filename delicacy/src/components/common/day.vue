@@ -13,26 +13,27 @@
 import TabsPaneContext from 'element-plus'
 import Card from '@/components/card.vue'
 import Title from "@/components/common/title.vue"
-import indexByRecommended from '@/api/module/index.ts'
-onBeforeMount(() => {
-  indexByRecommended(tabId)
-}).then(res => {
-  console.log(res);
-})
+import { indexByRecommended } from '@/api/module/index.ts'
+
 //传标题
 let title = ref('今日榜单')
 //传标签ID
-let tabId = ref()
+let id = 1
+
 
 const activeName = ref('first')
 
 const handleClick = (tab, event) => {
-  tabId.value = (Number(tab.index) + 1) + ''
-  console.log(tabId.value);
-  indexByRecommended(tabId).then(res => {
+  id = Number(tab.index) + 1
+  indexByRecommended({ id }).then(res => {
     console.log(res);
   })
 }
+onBeforeMount(() => {
+  indexByRecommended({ id }).then(res => {
+    console.log(res);
+  })
+})
 </script>
 <style scoped>
 .demo-tabs>.el-tabs__content {

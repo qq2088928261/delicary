@@ -18,17 +18,17 @@ export default defineConfig({
             imports: ['vue', 'vue-router']//自动导入vue和vue-router相关函数
         })],
     server: {
-        port: 8081, //启动端口
+        port: 8080, //启动端口
         hmr: {
             host: '127.0.0.1',
-            port: 8081
+            port: 8080
         },
         // // 设置 https 代理
         proxy: {
             '/api': {
                 target: 'http://localhost:8080/',
-                changeOrigin: true
-                // rewrite: (path: string) => path.replace(/^\/api/, '')
+                changeOrigin: true,
+                rewrite: (path: string) => path.replace(/^\/api/, '')
             }
         }
 

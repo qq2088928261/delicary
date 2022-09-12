@@ -17,12 +17,12 @@
 
 <script  setup>
 let Daterecommended = ref([])
-import indexByDateRecommended from '@/api/module/index.ts'
+import { indexByDateRecommended } from '@/api/module/index.ts'
 onBeforeMount(() => {
-  indexByDateRecommended()
-}).then(res => {
-  console.log(res);
-  // Daterecommended.value=
+  indexByDateRecommended(
+  ).then(res => {
+    console.log(res);
+  })
 })
 const cardList = ref([
   {

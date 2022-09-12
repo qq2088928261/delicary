@@ -19,26 +19,27 @@
 import TabsPaneContext from 'element-plus'
 import Card from '@/components/card.vue'
 import Title from "@/components/common/title.vue"
-import indexByDish from '@/api/module/index.ts'
-onBeforeMount(() => {
-  indexByDish(tabId)
-}).then(res => {
-  console.log(res);
-})
+import { indexByDish } from '@/api/module/index.ts'
 //传标题
 let title = ref('一日三餐')
 //传标签ID
-let tabId = ref()
+let id = 1
+
+
 
 const activeName = ref('first')
 
 const handleClick = (tab, event) => {
-  tabId.value = (Number(tab.index) + 1) + ''
-  console.log(tabId.value);
-  indexByDish(tabId).then(res => {
+  id = Number(tab.index) + 1;
+  indexByDish({ id }).then(res => {
     console.log(res);
   })
 }
+onBeforeMount(() => {
+  indexByDish({ id }).then(res => {
+    console.log(res);
+  })
+})
 </script>
 <style scoped>
 .demo-tabs>.el-tabs__content {
