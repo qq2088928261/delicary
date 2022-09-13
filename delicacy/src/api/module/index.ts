@@ -11,6 +11,12 @@ interface ILogin {
   token: string;
   expires: number;
 }
+export const indexGetInfo = (params: object) => {
+  return request({
+    url: '',
+    params
+  });
+};
 //得到一日三餐
 export const indexByDish = (params: object) => {
   return request({

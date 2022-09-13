@@ -58,9 +58,9 @@ const cardList = ref([
 
 ])
 const props = defineProps({
-  tabId: {
-    type: String,//类型字符串
-    default: '1'//如果没有传递msg参数,默认值是这个
+  id: {
+    type: Number,//类型字符串
+    default: 1//如果没有传递msg参数,默认值是这个
   },
   //24分栏的span属性
   cardSpan: {
@@ -73,7 +73,7 @@ const props = defineProps({
     default: '230'
   }
 })
-console.log(props.tabId);
+
 
 </script>
 

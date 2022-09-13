@@ -2,16 +2,16 @@
   <Title :title="title"></Title>
   <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
     <el-tab-pane label="早餐" name="first">
-      <Card :tabId="tabId" :cardSpan='7' :height="230"></Card>
+      <Card :id="id" :cardSpan='7' :height="230"></Card>
     </el-tab-pane>
     <el-tab-pane label="午餐" name="second">
-      <Card :tabId="tabId" :cardSpan='7' :height="230"></Card>
+      <Card :id="id" :cardSpan='7' :height="230"></Card>
     </el-tab-pane>
     <el-tab-pane label="晚餐" name="third">
-      <Card :tabId="tabId" :cardSpan='7' :height="230"></Card>
+      <Card :id="id" :cardSpan='7' :height="230"></Card>
     </el-tab-pane>
     <el-tab-pane label="夜宵" name="fourth">
-      <Card :tabId="tabId" :cardSpan='7' :height="230"></Card>
+      <Card :id="id" :cardSpan='7' :height="230"></Card>
     </el-tab-pane>
   </el-tabs>
 </template>

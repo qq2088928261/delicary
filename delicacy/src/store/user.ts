@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
+interface UserState {
+  token: string;
+}
 export const useUserStore = defineStore({
   id: 'user',
-  state: () => {
+  state: (): UserState => {
     return {
       token: ''
     }

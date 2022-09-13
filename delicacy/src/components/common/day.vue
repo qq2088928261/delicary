@@ -2,10 +2,10 @@
   <Title :title="title"></Title>
   <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
     <el-tab-pane label="最新" name="first">
-      <Card :tabId="tabId" :cardSpan='5' :height="183"></Card>
+      <Card :id="id" :cardSpan='5' :height="183"></Card>
     </el-tab-pane>
     <el-tab-pane label="最热" name="second">
-      <Card :tabId="tabId" :cardSpan='5' :height="183"></Card>
+      <Card :id="id" :cardSpan='5' :height="183"></Card>
     </el-tab-pane>
   </el-tabs>
 </template>

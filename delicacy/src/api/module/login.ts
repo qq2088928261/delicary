@@ -28,6 +28,13 @@ export const loginByRegister = (data: object) => {
         data
     });
 };
+export const createToken = () => {
+    return request({
+        url: '/api/auth/loginByJson',
+
+    });
+};
+
 export const getSetting = () => {
     return request<IResponseType<ILogin>>({
         url: '/api/auth/loginByJson',

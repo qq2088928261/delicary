@@ -117,7 +117,7 @@ import { loginByJson, loginByRegister } from '../api/module/login.ts'
 //加密
 import { Encrypt } from '../utils/aes'
 //pinia
-import { useUserStore } from '../store/user'
+import { useUserStore } from '@/store/user.ts'
 const userStore = useUserStore();
 //滑块验证
 import SlideVerify from "vue3-slide-verify";

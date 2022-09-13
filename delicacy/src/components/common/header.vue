@@ -25,23 +25,59 @@
 
         </ul>
       </div>
-      <div class="search-buy-login">
+      <div class="search-food-login">
         <div class="content-search">
           <input placeholder="请输入搜索美食">
           <el-icon :size="22" color="#808080">
             <Search />
           </el-icon>
         </div>
-        <div class="content-shopping">
-          <el-icon :size="24" color="#808080">
-            <ShoppingCart />
-          </el-icon>
+        <div class="content-login" v-if="!isLogin">
+          <router-link to="/login">登录/注册</router-link>
         </div>
-        <div class="content-login">登录/注册</div>
+        <div class="content-login-success" v-else>
+          <div @mouseenter='isShow=true' @mouseleave='isShow=false'>
+            <el-avatar :size="50" :src="userInfo.avatar" v-if="userInfo.avatar" />
+            <el-avatar :size="50" :src="circleUrl" v-else />
+          </div>
+        </div>
+        <div class="user-info" v-if="isShow">
+          <div class="popover">
+          </div>
+        </div>
       </div>
     </div>
+
   </header>
 </template>
+<script setup>
+import { createToken } from '@/api/module/login.ts'
+import { indexGetInfo } from '@/api/module/index.ts'
+const state = reactive({
+  circleUrl:
+    'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+  squareUrl:
+    'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
+})
+const { circleUrl, squareUrl, sizeList } = toRefs(state)
+//判断用户登录状态
+let isLogin = ref(true);
+//用户信息
+let userInfo = ref({});
+//显示用户更多数据
+let isShow = ref(false);
+onBeforeMount(() => {
+  createToken().then(res => {
+    getInfo({ token: res.data.token }).then(res => {
+      if (res.meta.code === '200') {
+        userInfo.value = res.data.data;
+        isLogin.value = true;
+
+      }
+    })
+  })
+})
+</script>
 <style scoped>
 header {
   display: flex;
@@ -78,7 +114,7 @@ header {
 }
 
 .content-nav {
-  width: 450px;
+  width: 495px;
   height: 75px;
 }
 
@@ -103,7 +139,7 @@ header {
   text-decoration: none;
 }
 
-.search-buy-login {
+.search-food-login {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -138,4 +174,76 @@ header {
   text-align: center;
   cursor: pointer;
 }
+
+.content-login a {
+  font-size: 18px;
+  color: #808080;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.content-login-success {
+  height: 53px;
+  color: #808080;
+  text-align: center;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #707070;
+  cursor: pointer
+}
+
+.avator {
+  height: 53px;
+  width: 53px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* 头像 */
+.demo-basic {
+  text-align: center;
+}
+
+.demo-basic .sub-title {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--el-text-color-secondary);
+}
+
+.demo-basic .demo-basic--circle,
+.demo-basic .demo-basic--square {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.demo-basic .block:not(:last-child) {
+  border-right: 1px solid var(--el-border-color);
+}
+
+.demo-basic .block {
+  flex: 1;
+}
+
+.demo-basic .el-col:not(:last-child) {
+  border-right: 1px solid var(--el-border-color);
+}
+
+.user-info {
+  position: absolute;
+  top: 80px;
+  right: 60px;
+  width: 200px;
+  height: 200px;
+  background-color: aqua;
+  z-index: 2;
+}
+
+.popover {}
 </style>
