@@ -7,6 +7,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
+
 // 创建vue实例
 const app = createApp(App)
 //element
@@ -14,6 +15,7 @@ app.use(ElementPlus)
 
 // 挂载pinia
 app.use(store)
+//挂载滑块
 //路由
 app.use(router);
 //elementplus图标

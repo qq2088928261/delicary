@@ -72,7 +72,6 @@ onBeforeMount(() => {
       if (res.meta.code === '200') {
         userInfo.value = res.data.data;
         isLogin.value = true;
-
       }
     })
   })
@@ -245,5 +244,12 @@ header {
   z-index: 2;
 }
 
-.popover {}
+.popover {
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 30px rgb(0 0 0 / 10%);
+  border-radius: 8px px;
+  border: 1px solid #e3e5e7;
+  color: #18191C;
+}
 </style>

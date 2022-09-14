@@ -53,10 +53,7 @@
                     </el-form-item>
                     <!-- 滑块 -->
                     <div class="verify">
-                      <slide-verify ref="block" slider-text="向右滑动->" accuracy="1" @again="onAgain" @success="Success"
-                        @fail="onFail" interval="20" w="350" h="85">
-                      </slide-verify>
-
+                      <Verify v-model:value="form.statusVerify"></Verify>
                     </div>
                     <el-form-item class="login-submit">
                       <el-button type="primary" @click='userBtn(ruleFormRef)'>登录</el-button>
@@ -119,33 +116,14 @@ import { Encrypt } from '../utils/aes'
 //pinia
 import { useUserStore } from '@/store/user.ts'
 const userStore = useUserStore();
-//滑块验证
-import SlideVerify from "vue3-slide-verify";
-import "vue3-slide-verify/dist/style.css";
+
 //地址选择器
 import { EluiChinaAreaDht } from 'elui-china-area-dht'
 //滑块验证
-const msg = ref("");
-const block = ref();
-const onAgain = () => {
-  msg.value = "检测到非人为操作的哦！ try again";
-  ElMessage(msg.value)
-  // 刷新
-  block.value?.refresh();
-}
-const Success = (times) => {
-  msg.value = `验证成功, 耗时${(times / 1000).toFixed(1)}s`;
-  statusVerify = true
-  ElMessage(msg.value)
-  console.log('成功');
-
-}
-
-const onFail = () => {
-  msg.value = "验证不通过";
-  ElMessage(msg.value)
-}
-let statusVerify = false
+import Verify from '@/components/common/verify.vue'
+const form = reactive({
+  statusVerify: false, // 滑块验证结果
+})
 //账号登录和注册切换
 let current = ref(1);
 //账号登录和注册
@@ -175,12 +153,13 @@ let rules = reactive({
 //账号密码点击登录
 const userBtn = (formEl) => {
   if (!formEl) return
-  if (!statusVerify) {
+  if (!form.statusVerify) {
     ElMessage({
       showClose: true,
       message: '请滑块验证',
       type: 'warning',
     })
+    return
   }
   formEl.validate((valid, fields) => {
     if (valid) {
