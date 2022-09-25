@@ -165,7 +165,7 @@ const userBtn = (formEl) => {
     if (valid) {
       loginByJson({
         userName: Encrypt(ruleForm.username),
-        passWord: Encrypt(ruleForm.userpwd)
+        password: Encrypt(ruleForm.userpwd)
       }).then(res => {
         //登录成功
         if (res.meta.code != "10006") {

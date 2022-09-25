@@ -16,14 +16,14 @@ interface ILogin {
 }
 export const loginByJson = (data: object) => {
     return request({
-        url: '/dish/login',
+        url: '/api/login',
         method: 'post',
         data
     });
 };
 export const loginByRegister = (data: object) => {
     return request({
-        url: '/api/auth/loginByJson',
+        url: '/api/registered',
         method: 'post',
         data
     });

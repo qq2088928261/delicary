@@ -19,10 +19,12 @@
 let Daterecommended = ref([])
 import { indexByDateRecommended } from '@/api/module/index.ts'
 onBeforeMount(() => {
-  indexByDateRecommended(
-  ).then(res => {
-    console.log(res);
-  })
+  if (props.state === 'false') {
+    indexByDateRecommended(
+    ).then(res => {
+      console.log(res);
+    })
+  }
 })
 const cardList = ref([
   {
@@ -71,8 +73,14 @@ const props = defineProps({
   height: {
     type: Number,
     default: '230'
+  },
+  //限定是否分页
+  state: {
+    type: Boolean,
+    default: true
   }
 })
+
 
 
 </script>

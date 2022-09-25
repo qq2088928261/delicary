@@ -36,13 +36,122 @@
           <router-link to="/login">登录/注册</router-link>
         </div>
         <div class="content-login-success" v-else>
-          <div @mouseenter='isShow=true' @mouseleave='isShow=false'>
-            <el-avatar :size="50" :src="userInfo.avatar" v-if="userInfo.avatar" />
-            <el-avatar :size="50" :src="circleUrl" v-else />
+          <div class="user-avatar" @mouseover='showUser' @mouseout='hideUser' ref="getUserRef">
+            <div class="avatar">
+              <el-avatar :size="50" :src="userInfo.avatar" v-if="userInfo.avatar" />
+              <el-avatar :size="50" :src="circleUrl" v-else />
+            </div>
           </div>
         </div>
-        <div class="user-info" v-if="isShow">
-          <div class="popover">
+        <div class="user-info" v-show="isShow" @mouseover='showUser' @mouseout='hideUser'>
+          <div class="user-name">
+            <router-link to="/">网络冲浪001</router-link>
+          </div>
+          <div class="user-vip">
+            <router-link to="/">vip</router-link>
+          </div>
+          <div class="user-fans">
+            <router-link to="/">
+              <div class="user-num">152</div>
+              <div class="user-text">关注</div>
+            </router-link>
+            <router-link to="/">
+              <div class="user-num">16</div>
+              <div class="user-text">粉丝</div>
+            </router-link>
+            <router-link to="/">
+              <div class="user-num">27</div>
+              <div class="user-text">动态</div>
+            </router-link>
+          </div>
+          <div class="user">
+            <router-link to="/">
+              <div class="user-index">
+                <div class="user-left">
+                  <el-icon class="user-icon" :size="19">
+                    <User />
+                  </el-icon>
+                  <span>个人中心</span>
+                </div>
+                <div class="user-right">
+                  <el-icon icon-arrow>
+                    <ArrowRight />
+                  </el-icon>
+                </div>
+              </div>
+            </router-link>
+          </div>
+          <div class="user">
+            <router-link to="/">
+              <div class="user-index">
+                <div class="user-left">
+                  <el-icon class="user-icon" :size="19">
+                    <Folder />
+                  </el-icon>
+                  <span>内容管理</span>
+                </div>
+                <div class="user-right">
+                  <el-icon icon-arrow>
+                    <ArrowRight />
+                  </el-icon>
+                </div>
+              </div>
+            </router-link>
+          </div>
+          <div class="user">
+            <router-link to="/">
+              <div class="user-index">
+                <div class="user-left">
+                  <el-icon class="user-icon" :size="19">
+                    <Document />
+                  </el-icon>
+                  <span>我的订单</span>
+                </div>
+                <div class="user-right">
+                  <el-icon icon-arrow>
+                    <ArrowRight />
+                  </el-icon>
+                </div>
+              </div>
+            </router-link>
+          </div>
+          <div class="user">
+            <router-link to="/">
+              <div class="user-index">
+                <div class="user-left">
+                  <el-icon class="user-icon" :size="19">
+                    <Star />
+                  </el-icon>
+                  <span>我的收藏</span>
+                </div>
+                <div class="user-right">
+                  <el-icon icon-arrow>
+                    <ArrowRight />
+                  </el-icon>
+                </div>
+              </div>
+            </router-link>
+          </div>
+          <el-divider />
+          <div class="user">
+            <router-link to="/">
+              <div class="user-index">
+                <div class="user-left">
+                  <svg t="1663919587117" class="user-icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="4642" width="19" height="19">
+                    <path
+                      d="M482.464 512V157.536a29.536 29.536 0 0 1 59.072 0V512a29.504 29.504 0 1 1-59.072 0z m344.064-220.256a383.04 383.04 0 0 0-94.208-94.368l-0.096 0.096a29.472 29.472 0 1 0-33.824 48.384c0.128 0.096 0.288 0.096 0.416 0.192 40 28.128 50.976 39.104 79.328 79.584 102.752 146.752 66.976 349.792-79.808 452.544a325.824 325.824 0 0 1-372.736 0.064 323.84 323.84 0 0 1-79.712-79.904c-49.792-71.008-68.896-157.28-53.824-242.72s62.528-159.968 133.664-209.728c0.224-0.16 0.48-0.288 0.672-0.48l-0.16-0.16A29.504 29.504 0 0 0 291.776 197.44c-0.096 0.064-0.128 0.224-0.256 0.256l-0.032-0.032C118.016 319.36 75.904 558.656 197.472 732.256a383.04 383.04 0 0 0 94.208 94.368c128.448 89.952 304.64 95.072 440.544-0.064 173.728-121.664 215.936-361.12 94.304-534.816z"
+                      p-id="4643" fill="#707070"></path>
+                  </svg>
+                  <span>退出登录</span>
+                </div>
+                <div class="user-right">
+                  <el-icon icon-arrow>
+                    <ArrowRight />
+                  </el-icon>
+                </div>
+              </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -63,7 +172,8 @@ const { circleUrl, squareUrl, sizeList } = toRefs(state)
 //判断用户登录状态
 let isLogin = ref(true);
 //用户信息
-let userInfo = ref({});
+let userInfo = reactive({});
+let getUserRef = ref();
 //显示用户更多数据
 let isShow = ref(false);
 onBeforeMount(() => {
@@ -76,8 +186,21 @@ onBeforeMount(() => {
     })
   })
 })
+const showUser = () => {
+  isShow.value = true
+  getUserRef.value.className = "user-avatar1"
+  console.log(getUserRef);
+
+}
+const hideUser = () => {
+  isShow.value = false
+  getUserRef.value.className = "user-avatar2"
+  console.log(getUserRef);
+}
+
+
 </script>
-<style scoped>
+<style  lang="less" scoped>
 header {
   display: flex;
   justify-content: center;
@@ -237,19 +360,152 @@ header {
 .user-info {
   position: absolute;
   top: 80px;
-  right: 60px;
-  width: 200px;
-  height: 200px;
-  background-color: aqua;
-  z-index: 2;
-}
-
-.popover {
-  position: relative;
+  right: 32px;
+  width: 300px;
+  height: 330px;
   background-color: #fff;
+  z-index: 2;
+  border-radius: 13px;
   box-shadow: 0 0 30px rgb(0 0 0 / 10%);
   border-radius: 8px px;
   border: 1px solid #e3e5e7;
   color: #18191C;
+  padding-top: 44px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.popover {
+  position: relative;
+}
+
+.avatar {
+  height: 75px;
+  width: 50px;
+  position: absolute;
+  z-index: 3;
+
+}
+
+.user-avatar {
+  position: absolute;
+  width: 75px;
+  height: 53px;
+  top: 12.5px;
+}
+
+
+
+.user-avatar1 {
+  position: absolute;
+  width: 75px;
+  height: 53px;
+  top: 12.5px;
+
+  .avatar {
+    top: 30px;
+  }
+
+  .el-avatar {
+    width: 75px;
+    height: 75px;
+    animation-name: avatarMove;
+    animation-duration: 0.3s;
+  }
+
+}
+
+
+@keyframes avatarMove {
+  from {
+    width: 50px;
+    height: 50px;
+  }
+
+  to {
+    width: 75px;
+    height: 75px;
+  }
+}
+
+//回溯动画
+
+.user-avatar2 {
+  position: absolute;
+  width: 75px;
+  height: 53px;
+  top: 12.5px;
+
+  .el-avatar {
+    width: 50px;
+    height: 50px;
+    animation-name: avatarMove1;
+    animation-duration: 0.3s;
+  }
+
+}
+
+
+@keyframes avatarMove1 {
+  from {
+    width: 75px;
+    height: 75px;
+  }
+
+  to {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.user-name {
+  color: rgb(97, 102, 109);
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.user-vip {
+  color: #f89898;
+  margin-bottom: 10px;
+}
+
+.user-fans {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 30px;
+  margin-bottom: 12px;
+}
+
+.user-index {
+  display: flex;
+  align-items: center;
+  // justify-content: center;
+  width: 250px;
+  height: 38px;
+  margin: 0 25px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #61666D;
+}
+
+.user-index:hover {
+  background-color: #dedfe0;
+}
+
+.user-icon {
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+
+
+.user-left {
+  width: 190px;
+  padding-right: 30px;
+}
+
+.el-divider--horizontal {
+  margin: 11px 0;
 }
 </style>
